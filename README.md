@@ -28,7 +28,7 @@ cd R4.DWeb-DI.07/
 
 # Faites le commit (vous pouvez personnaliser le message entre guillemets)
 git add .
-git commit -m "Nouvelle version du projet" 
+git commit -m "TPX - Exercice X" 
 
 # Mettez à jour votre repository local avec la dernière version du repository distant
 git fetch
