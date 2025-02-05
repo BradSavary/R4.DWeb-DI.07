@@ -13,16 +13,11 @@ class Lego
     private string $boxImage;
     private string $legoImage;
 
-    public function __construct()
+    public function __construct($id, $name, $collection)
     {
-        $this->id = 10252;
-        $this->name = 'La coccinelle Volkwagen';
-        $this->collection = 'Creator Expert';
-        $this->description = 'Construis une réplique LEGO® Creator Expert de l\'automobile la plus populaire au monde. Ce magnifique modèle LEGO est plein de détails authentiques qui capturent le charme et la personnalité de la voiture, notamment un coloris bleu ciel, des ailes arrondies, des jantes blanches avec des enjoliveurs caractéristiques, des phares ronds et des clignotants montés sur les ailes.';
-        $this->price = 94.99;
-        $this->pieces = 1167;
-        $this->boxImage = 'LEGO_10252_Box.png';
-        $this->legoImage = 'LEGO_10252_Main.jpg';
+        $this->id = $id;
+        $this->name = $name;
+        $this->collection = $collection;
     }
 
     public function getId(): int
