@@ -5,24 +5,29 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Service\LegoService;
 use App\Repository\LegoRepository;
+use App\Repository\LegoCollectionRepository;
+use App\Entity\LegoCollection;
 
 class LegoController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function home(LegoRepository $legoService): Response
+    public function home(LegoRepository $legoService, LegoCollectionRepository $collectionRepository): Response
     {
         $response = new Response();
         $legos = $legoService->findAll();
+        $collections = $collectionRepository->findAll();
         foreach ($legos as $lego) {
-            $response->setContent($response->getContent() . $this->renderView('lego.html.twig', ['lego' => $lego]));
+            $response->setContent($response->getContent() . $this->renderView('lego.html.twig', [
+                'lego' => $lego,
+                'collections' => $collections
+            ]));
         }
         return $response;
     }
 
     #[Route('/{collection}', name: 'filter_by_collection', requirements: ['collection' => 'creator|star_wars|creator_expert'])]
-    public function filter(string $collection, LegoRepository $legoService): Response
+    public function filter(string $collection, LegoRepository $legoService, LegoCollectionRepository $collectionRepository): Response
     {
         $response = new Response();
         if ($collection == 'star_wars') {
@@ -31,16 +36,21 @@ class LegoController extends AbstractController
             $collection = 'creator expert';
         }
         $legos = $legoService->findByCollection($collection);
+        $collections = $collectionRepository->findAll();
         foreach ($legos as $lego) {
-            $response->setContent($response->getContent() . $this->renderView('lego.html.twig', ['lego' => $lego]));
+            $response->setContent($response->getContent() . $this->renderView('lego.html.twig', [
+                'lego' => $lego,
+                'collections' => $collections
+            ]));
         }
         return $response;
     }
 
-    #[Route('/me', name: 'me')]
-    public function me()
+    #[Route('/collection', name: 'test')]
+    public function test(LegoCollectionRepository $collectionRepository): Response
     {
-        die("BradSavary");
+        $collections = $collectionRepository->findAll();
+        return $this->render('collections.html.twig', ['collections' => $collections]);
     }
 }
 ?>
