@@ -2,106 +2,124 @@
 
 namespace App\Entity;
 
+use App\Repository\LegoRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: LegoRepository::class)]
 class Lego
 {
-    private int $id;
-    private string $name;
-    private string $collection;
-    private string $description;
-    private float $price;
-    private int $pieces;
-    private string $boxImage;
-    private string $legoImage;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    public function __construct()
-    {
-        $this->id = 10252;
-        $this->name = 'La coccinelle Volkwagen';
-        $this->collection = 'Creator Expert';
-        $this->description = 'Construis une réplique LEGO® Creator Expert de l\'automobile la plus populaire au monde. Ce magnifique modèle LEGO est plein de détails authentiques qui capturent le charme et la personnalité de la voiture, notamment un coloris bleu ciel, des ailes arrondies, des jantes blanches avec des enjoliveurs caractéristiques, des phares ronds et des clignotants montés sur les ailes.';
-        $this->price = 94.99;
-        $this->pieces = 1167;
-        $this->boxImage = 'LEGO_10252_Box.png';
-        $this->legoImage = 'LEGO_10252_Main.jpg';
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
-    public function getId(): int
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?float $price = null;
+
+    #[ORM\Column]
+    private ?int $pieces = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $boxImage = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $legoImage = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Lego')]
+    private ?LegoCollection $category = null;
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getCollection(): string
+    public function setName(string $name): static
     {
-        return $this->collection;
+        $this->name = $name;
+
+        return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function getPrice(): float
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function getPieces(): int
+    public function setPrice(float $price): static
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPieces(): ?int
     {
         return $this->pieces;
     }
 
-    public function getBoxImage(): string
+    public function setPieces(int $pieces): static
+    {
+        $this->pieces = $pieces;
+
+        return $this;
+    }
+
+    public function getBoxImage(): ?string
     {
         return $this->boxImage;
     }
 
-    public function getlegoImage(): string
+    public function setBoxImage(string $boxImage): static
+    {
+        $this->boxImage = $boxImage;
+
+        return $this;
+    }
+
+    public function getLegoImage(): ?string
     {
         return $this->legoImage;
     }
-    public function setId(int $id): void
-{
-    $this->id = $id;
-}
 
-public function setName(string $name): void
-{
-    $this->name = $name;
-}
+    public function setLegoImage(string $legoImage): static
+    {
+        $this->legoImage = $legoImage;
 
-public function setCollection(string $collection): void
-{
-    $this->collection = $collection;
-}
+        return $this;
+    }
 
-public function setDescription(string $description): void
-{
-    $this->description = $description;
-}
+    public function getCategory(): ?LegoCollection
+    {
+        return $this->category;
+    }
 
-public function setPrice(float $price): void
-{
-    $this->price = $price;
-}
+    public function setCategory(?LegoCollection $category): static
+    {
+        $this->category = $category;
 
-public function setPieces(int $pieces): void
-{
-    $this->pieces = $pieces;
+        return $this;
+    }
 }
-
-public function setBoxImage(string $boxImage): void
-{
-    $this->boxImage = $boxImage;
-}
-
-public function setlegoImage(string $legoImage): void
-{
-    $this->legoImage = $legoImage;
-}
-}
-?>
