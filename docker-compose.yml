@@ -20,6 +20,7 @@ services:
       - ./:/var/www/html
     working_dir: /var/www/html
 
+
   mysql:
     container_name: tp-symfony-mysql
     image: mysql:8

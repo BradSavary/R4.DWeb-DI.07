@@ -11,8 +11,8 @@ use App\Entity\LegoCollection;
 
 class LegoController extends AbstractController
 {
-    #[Route('/', name: 'home')]
-    public function home(LegoRepository $legoService, LegoCollectionRepository $collectionRepository): Response
+    #[Route('/', name: 'all')]
+    public function all(LegoRepository $legoService, LegoCollectionRepository $collectionRepository): Response
     {
         $response = new Response();
         $legos = $legoService->findAll();
