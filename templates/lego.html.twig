@@ -4,11 +4,19 @@
 <nav>
   <a href="/">All</a> |
   {% for collection in collections %}
-    <a href="{{ path('filter_by_collection', {id: collection.id}) }}">{{ collection.name }}</a> |
+    {% if collection.id != 5  %}
+      <a href="{{ path('filter_by_collection', {id: collection.id}) }}">{{ collection.name }}</a> |
+    {% endif %}
   {% endfor %}
   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  {% for collection in collections %}
+    {% if collection.id == 5 %}
+      <a href="{{ path('filter_by_collection', {id: collection.id}) }}">{{ collection.name }}</a> |
+    {% endif %}
+    {% endfor %}
     <span>Bonjour {{ app.user.email }} !</span>
     <a href="{{ path('app_logout') }}">Déconnexion</a>
+    
   {% else %}
     <a href="{{ path('lego_store_login') }}">Connexion</a>
   {% endif %}
@@ -16,28 +24,28 @@
 <div class="lego_card">
   <div class="info_section">
     <div class="lego_header">
-      <img class="locandina" src="/images/{{ lego.BoxImage }}" alt="Lego Box Image"/>
-      <h1>{{ lego.name }}</h1>
-      <h4>Collection : {{ lego.category.name }}</h4>
-      <span class="pieces">Pièces : {{ lego.pieces }}</span>
-      <p class="price">{{ lego.price }}€</p><br>
-      <a href="index.php?buy={{ lego.id }}"><button>Buy</button></a>
+    <img class="locandina" src="/images/{{ lego.BoxImage }}" alt="Lego Box Image"/>
+    <h1>{{ lego.name }}</h1>
+    <h4>Collection : {{ lego.category.name }}</h4>
+    <span class="pieces">Pièces : {{ lego.pieces }}</span>
+    <p class="price">{{ lego.price }}€</p><br>
+    <a href="index.php?buy={{ lego.id }}"><button>Buy</button></a>
     </div>
     <div class="lego_desc">
-      <p class="text">
-        {{ lego.description }}
-      </p>
+    <p class="text">
+    {{ lego.description }}
+    </p>
     </div>
     <div class="lego_social">
-      <ul>
-        <li><i class="material-icons">share</i></li>
-        <li><i class="material-icons"></i></li>
-        <li><i class="material-icons">chat_bubble</i></li>
-      </ul>
+    <ul>
+    <li><i class="material-icons">share</i></li>
+    <li><i class="material-icons"></i></li>
+    <li><i class="material-icons">chat_bubble</i></li>
+    </ul>
     </div>
   </div>
   <div class="blur_back">
     <img src="/images/{{ lego.legoImage }}" alt="background lego card">
   </div>
 </div>
-{% endblock %}
+{% endblock %} 
