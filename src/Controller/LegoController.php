@@ -48,4 +48,4 @@ class LegoController extends AbstractController
         return $response;
     }
 }
-?>   
+?>
