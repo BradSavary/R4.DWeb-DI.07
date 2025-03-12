@@ -16,6 +16,8 @@ class LegoCollectionRepository extends ServiceEntityRepository
         parent::__construct($registry, LegoCollection::class);
     }
 
+    
+
     //    /**
     //     * @return LegoCollection[] Returns an array of LegoCollection objects
     //     */
@@ -41,3 +43,4 @@ class LegoCollectionRepository extends ServiceEntityRepository
     //        ;
     //    }
 }
+

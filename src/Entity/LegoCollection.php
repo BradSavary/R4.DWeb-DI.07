@@ -75,4 +75,8 @@ class LegoCollection
 
         return $this;
     }
+    public function getLegos()
+{
+    return $this->Lego;
+}
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Lego;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,17 +27,18 @@ class LegoController extends AbstractController
         return $response;
     }
 
-    #[Route('/{collection}', name: 'filter_by_collection', requirements: ['collection' => 'creator|star_wars|creator_expert'])]
-    public function filter(string $collection, LegoRepository $legoService, LegoCollectionRepository $collectionRepository): Response
+    #[Route('/collections/{id}', name: 'filter_by_collection')]
+    public function filter(int $id, LegoCollectionRepository $collectionRepository): Response
     {
-        $response = new Response();
-        if ($collection == 'star_wars') {
-            $collection = 'Star Wars';
-        } else if ($collection == 'creator_expert') {
-            $collection = 'creator expert';
+        $legoCollection = $collectionRepository->find($id);
+        if (!$legoCollection) {
+            throw $this->createNotFoundException('Collection not found');
         }
-        $legos = $legoService->findByCollection($collection);
+
+        $legos = $legoCollection->getLego();
         $collections = $collectionRepository->findAll();
+
+        $response = new Response();
         foreach ($legos as $lego) {
             $response->setContent($response->getContent() . $this->renderView('lego.html.twig', [
                 'lego' => $lego,
@@ -45,12 +47,5 @@ class LegoController extends AbstractController
         }
         return $response;
     }
-
-    #[Route('/collection', name: 'test')]
-    public function test(LegoCollectionRepository $collectionRepository): Response
-    {
-        $collections = $collectionRepository->findAll();
-        return $this->render('collections.html.twig', ['collections' => $collections]);
-    }
 }
-?>
+?>   
