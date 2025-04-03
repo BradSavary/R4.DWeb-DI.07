@@ -16,7 +16,15 @@ class LegoController extends AbstractController
     public function all(LegoRepository $legoService, LegoCollectionRepository $collectionRepository): Response
     {
         $response = new Response();
-        $legos = $legoService->findAll();
+        // Vérifiez si l'utilisateur est connecté
+        if ($this->getUser()) {
+            // Utilisateur connecté, récupérer toutes les catégories
+            $legos = $legoService->findAll();
+        } else {
+            // Utilisateur non connecté, exclure la catégorie premium
+            $legos = $legoService->findAllExcludingPremium();
+        }
+ 
         $collections = $collectionRepository->findAll();
         foreach ($legos as $lego) {
             $response->setContent($response->getContent() . $this->renderView('lego.html.twig', [
@@ -48,4 +56,4 @@ class LegoController extends AbstractController
         return $response;
     }
 }
-?>   
+?>

@@ -1,11 +1,25 @@
- {% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
 <nav>
   <a href="/">All</a> |
   {% for collection in collections %}
-    <a href="{{ path('filter_by_collection', {id: collection.id}) }}">{{ collection.name }}</a> |
+    {% if collection.id != 5  %}
+      <a href="{{ path('filter_by_collection', {id: collection.id}) }}">{{ collection.name }}</a> |
+    {% endif %}
   {% endfor %}
+  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  {% for collection in collections %}
+    {% if collection.id == 5 %}
+      <a href="{{ path('filter_by_collection', {id: collection.id}) }}">{{ collection.name }}</a> |
+    {% endif %}
+    {% endfor %}
+    <span>Bonjour {{ app.user.email }} !</span>
+    <a href="{{ path('app_logout') }}">Déconnexion</a>
+    
+  {% else %}
+    <a href="{{ path('lego_store_login') }}">Connexion</a>
+  {% endif %}
 </nav>
 <div class="lego_card">
   <div class="info_section">
@@ -34,4 +48,4 @@
     <img src="/images/{{ lego.legoImage }}" alt="background lego card">
   </div>
 </div>
-{% endblock %}   
+{% endblock %} 
